@@ -1,5 +1,5 @@
 (ns gears.hash-map
-  (:require gears.list :as list))
+  (:require [gears.list :as list]))
 
 (defn map-to-keys
   "Takes a function `f` and maps it to the keys of m and reconstructs the hash-map"
@@ -22,8 +22,7 @@
 (defn merge-maps-by-key-value
   "Given a list of 'sets' (using that term loosely here, because they aren't actual clojure sets,
    merge them by a given key.  For example:
-   `(merge-sets-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}]
-                              [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)`
+   `(merge-sets-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)`
    -> `[{:a 5 :b 6 :c 12} {:a 6 :b 7 :c 14} {:a 8 :b 9 :c 18}]`"
   [sets key]
   (let [all-key-values (set (flatten (map #(pmap (fn [m] (get m key)) %) sets)))]

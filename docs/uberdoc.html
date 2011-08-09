@@ -2527,55 +2527,49 @@ $(document).ready(function() {
 
 })
 </script><title>gears -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">gears</h1><h2 class="project-version">1.0.0-SNAPSHOT</h2><br /><p>FIXME: write</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.5.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.core">gears.core</a></li><li><a href="#gears.date">gears.date</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.set">gears.set</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.core" name="gears.core"><h1 class="project-name">gears.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.core)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date" name="gears.date"><h1 class="project-name">gears.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date">gears.date</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.set">gears.set</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date" name="gears.date"><h1 class="project-name">gears.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.date
   (:import [java.util.Date]
 	   [java.text DateFormat SimpleDateFormat]
 	   [java.util.Calendar]
            [java.text.ParseException]))</pre></tr><tr><td class="docs"><p>Today's date as a yyyy-MM-dd string, unless a format is provided</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn todays-date
-  [& format]
-  (let [format (or (first format) "yyyy-MM-dd")
+  [&amp; format]
+  (let [format (or (first format) &quot;yyyy-MM-dd&quot;)
         df (new SimpleDateFormat format)
         today (new java.util.Date)]
     (.format df today)))</pre></tr><tr><td class="docs"><p>Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn date-to-string
-  ([date] (date-to-string "yyyy-MM-dd"))
+  ([date] (date-to-string &quot;yyyy-MM-dd&quot;))
   ([date format]  (let [df (SimpleDateFormat. format)]
                     (.format df date))))</pre></tr><tr><td class="docs"><p>Convert a formatted string to a Java Date object.  If no format is given,
    automatically attempts to convert with yyyy-MM-dd and MM/dd/yyyy formats.</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn string-to-date
-  [date-string & given-formats]
-  (let [formats (or given-formats ["MM/dd/yyyy" "yyyy-MM-dd"])
+  [date-string &amp; given-formats]
+  (let [formats (or given-formats [&quot;MM/dd/yyyy&quot; &quot;yyyy-MM-dd&quot;])
         date-objects (filter identity (map #(try (.parse (SimpleDateFormat. %) date-string)
                                                  (catch Exception e nil)) formats))]
     (if (empty? date-objects)
-        (throw (java.text.ParseException. "Unable to parse string" 0))
+        (throw (java.text.ParseException. &quot;Unable to parse string&quot; 0))
         (first date-objects))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.hash-map" name="gears.hash-map"><h1 class="project-name">gears.hash-map</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.hash-map
-  (:require gears.list :as list))</pre></tr><tr><td class="docs">
+  (:require [gears.list :as list]))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the keys of m and reconstructs the hash-map</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-keys
-  "Takes a function `f` and maps it to the keys of m and reconstructs the hash-map"
   [m f]
-  (into {} (for [[k v] m] ([(f k) v]))))</pre></tr><tr><td class="docs">
+  (into {} (for [[k v] m] ([(f k) v]))))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the values of m and reconstructs the hash-map</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-values
-  "Takes a function `f` and maps it to the values of m and reconstructs the hash-map"
   [m f]
-  (into {} (for [[k v] m] ([k (f v)]))))</pre></tr><tr><td class="docs">
+  (into {} (for [[k v] m] ([k (f v)]))))</pre></tr><tr><td class="docs"><p>Given two maps, merge shared keys into a list.
+   <code>(merge-sets-by-key {:a :b, :c :d} {:a :e, :c :f})</code>
+   -> <code>{:a (:b :e), :c (:d :f)}</code></p>
 </td><td class="codes" /><pre class="brush: clojure">(defn merge-maps-by-key
-  "Given two maps, merge shared keys into a list.
-   `(merge-sets-by-key {:a :b, :c :d} {:a :e, :c :f})`
-   -> `{:a (:b :e), :c (:d :f)}`"
   [map-a map-b]
   (let [all-key-values (set (concat (keys map-a) (keys map-b)))]
-    (list/map-list-to-hashmap all-key-values #(filter identity [(get map-a %) (get map-b %)]))))</pre></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(defn merge-maps-by-key-value
-  "Given a list of 'sets' (using that term loosely here, because they aren't actual clojure sets,
+    (list/map-list-to-hashmap all-key-values #(filter identity [(get map-a %) (get map-b %)]))))</pre></tr><tr><td class="docs"><p>Given a list of 'sets' (using that term loosely here, because they aren't actual clojure sets,
    merge them by a given key.  For example:
-   `(merge-sets-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}]
-                              [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)`
-   -> `[{:a 5 :b 6 :c 12} {:a 6 :b 7 :c 14} {:a 8 :b 9 :c 18}]`"
+   <code>(merge-sets-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)</code>
+   -> <code>[{:a 5 :b 6 :c 12} {:a 6 :b 7 :c 14} {:a 8 :b 9 :c 18}]</code></p>
+</td><td class="codes" /><pre class="brush: clojure">(defn merge-maps-by-key-value
   [sets key]
   (let [all-key-values (set (flatten (map #(pmap (fn [m] (get m key)) %) sets)))]
     (reduce
@@ -2586,23 +2580,25 @@ $(document).ready(function() {
 			 key k)
 		       acc))
      [] all-key-values)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.http.middleware" name="gears.http.middleware"><h1 class="project-name">gears.http.middleware</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.http.middleware)</pre></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(defn wrap-if [app pred wrapper & args]
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.http.middleware)</pre></tr><tr><td class="docs"><p>Creates a middleware wrapper that applies <code>wrapper</code> if <code>pred</code> is true</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn wrap-if
+  [app pred wrapper &amp; args]
   (if pred
     (apply wrapper app args)
-    app))</pre></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(defn wrap-failsafe [handler]
+    app))</pre></tr><tr><td class="docs"><p>Creates a failsafe wrapper that returns a 500 if any error occurs</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn wrap-failsafe
+  [handler]
   (fn [req]
     (try
       (handler req)
       (catch Exception e
 	(do
 	  {:status 500
-	   :headers {"Content-Type" "text/plain"}
-	   :body "We're sorry, something went wrong."})))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.list" name="gears.list"><h1 class="project-name">gears.list</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.list)</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and a list <code>l</code> and creates a hash-map with keys l and values (f l)</p>
+	   :headers {&quot;Content-Type&quot; &quot;text/plain&quot;}
+	   :body &quot;We're sorry, something went wrong.&quot;})))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.list" name="gears.list"><h1 class="project-name">gears.list</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.list)</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and a list <code>l</code> and creates a hash-map with keys l and values <code>(f l)</code></p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-list-to-hashmap
   [l f]
   (reduce (fn [m e] (assoc m e (f e)))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.set" name="gears.set"><h1 class="project-name">gears.set</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_gears.core">gears.core</li><li class="floating-toc-li" id="floating-toc_gears.date">gears.date</li><li class="floating-toc-li" id="floating-toc_gears.hash-map">gears.hash-map</li><li class="floating-toc-li" id="floating-toc_gears.http.middleware">gears.http.middleware</li><li class="floating-toc-li" id="floating-toc_gears.list">gears.list</li><li class="floating-toc-li" id="floating-toc_gears.set">gears.set</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_gears.date">gears.date</li><li class="floating-toc-li" id="floating-toc_gears.hash-map">gears.hash-map</li><li class="floating-toc-li" id="floating-toc_gears.http.middleware">gears.http.middleware</li><li class="floating-toc-li" id="floating-toc_gears.list">gears.list</li><li class="floating-toc-li" id="floating-toc_gears.set">gears.set</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
        SyntaxHighlighter.all()</script></body></html>

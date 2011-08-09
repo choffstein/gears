@@ -1,11 +1,15 @@
 (ns gears.http.middleware)
 
-(defn wrap-if [app pred wrapper & args]
+(defn wrap-if
+  "Creates a middleware wrapper that applies `wrapper` if `pred` is true"
+  [app pred wrapper & args]
   (if pred
     (apply wrapper app args)
     app))
 
-(defn wrap-failsafe [handler]
+(defn wrap-failsafe
+  "Creates a failsafe wrapper that returns a 500 if any error occurs"
+  [handler]
   (fn [req]
     (try
       (handler req)
