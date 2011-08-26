@@ -5,15 +5,20 @@
            [java.text.ParseException]))
 
 (defn todays-date
-  "Today's date as a yyyy-MM-dd string, unless a format is provided"
-  [& format]
-  (let [format (or (first format) "yyyy-MM-dd")
-        df (new SimpleDateFormat format)
-        today (new java.util.Date)]
-    (.format df today)))
+  "Today's date as a yyyy-MM-dd string, unless a format is provided."
+  ([] (todays-date "yyyy-MM-dd"))
+  ([format] (let [df (new SimpleDateFormat format)
+                  today (new java.util.Date)]
+              (.format df today))))
+
+(defn current-time
+  "The current time in yyyy-MM-dd'T'HH:mmZ unless a format is provided."
+  ([] (current-time "yyyy-MM-dd'T'HH:mmZ"))
+  ([format]  (let [df (SimpleDateFormat. format)]
+               (.toString (.format df (Date.))))))
 
 (defn date-to-string
-  "Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided"
+  "Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided."
   ([date] (date-to-string "yyyy-MM-dd"))
   ([date format]  (let [df (SimpleDateFormat. format)]
                     (.format df date))))

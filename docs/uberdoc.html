@@ -2527,31 +2527,49 @@ $(document).ready(function() {
 
 })
 </script><title>gears -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">gears</h1><h2 class="project-version">1.0.0-SNAPSHOT</h2><br /><p>FIXME: write</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date">gears.date</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.set">gears.set</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date" name="gears.date"><h1 class="project-name">gears.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">mmemail</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">sandbar/sandbar</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date">gears.date</a></li><li><a href="#gears.development-mode">gears.development-mode</a></li><li><a href="#gears.exceptions">gears.exceptions</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.http">gears.http</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.regex">gears.regex</a></li><li><a href="#gears.rss">gears.rss</a></li><li><a href="#gears.set">gears.set</a></li><li><a href="#gears.util">gears.util</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date" name="gears.date"><h1 class="project-name">gears.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.date
   (:import [java.util.Date]
 	   [java.text DateFormat SimpleDateFormat]
 	   [java.util.Calendar]
-           [java.text.ParseException]))</pre></tr><tr><td class="docs"><p>Today's date as a yyyy-MM-dd string, unless a format is provided</p>
+           [java.text.ParseException]))</pre></tr><tr><td class="docs"><p>Today's date as a yyyy-MM-dd string, unless a format is provided.</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn todays-date
-  [&amp; format]
-  (let [format (or (first format) &quot;yyyy-MM-dd&quot;)
-        df (new SimpleDateFormat format)
-        today (new java.util.Date)]
-    (.format df today)))</pre></tr><tr><td class="docs"><p>Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided</p>
+  ([] (todays-date &quot;yyyy-MM-dd&quot;))
+  ([format] (let [df (new SimpleDateFormat format)
+                  today (new java.util.Date)]
+              (.format df today))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn current-time
+  &quot;The current time in yyyy-MM-dd'T'HH:mmZ unless a format is provided.&quot;
+  ([] (current-time &quot;yyyy-MM-dd'T'HH:mmZ&quot;))
+  ([format]  (let [df (SimpleDateFormat. format)]
+               (.toString (.format df (Date.))))))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defn date-to-string
+  &quot;Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided.&quot;
   ([date] (date-to-string &quot;yyyy-MM-dd&quot;))
   ([date format]  (let [df (SimpleDateFormat. format)]
-                    (.format df date))))</pre></tr><tr><td class="docs"><p>Convert a formatted string to a Java Date object.  If no format is given,
-   automatically attempts to convert with yyyy-MM-dd and MM/dd/yyyy formats.</p>
+                    (.format df date))))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defn string-to-date
+  &quot;Convert a formatted string to a Java Date object.  If no format is given, automatically attempts to convert with yyyy-MM-dd and MM/dd/yyyy formats.&quot;
   [date-string &amp; given-formats]
   (let [formats (or given-formats [&quot;MM/dd/yyyy&quot; &quot;yyyy-MM-dd&quot;])
         date-objects (filter identity (map #(try (.parse (SimpleDateFormat. %) date-string)
                                                  (catch Exception e nil)) formats))]
     (if (empty? date-objects)
         (throw (java.text.ParseException. &quot;Unable to parse string&quot; 0))
-        (first date-objects))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.hash-map" name="gears.hash-map"><h1 class="project-name">gears.hash-map</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+        (first date-objects))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.development-mode" name="gears.development-mode"><h1 class="project-name">gears.development-mode</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.development-mode)</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(def production?
+     (= &quot;production&quot; (get (System/getenv) &quot;APP_ENV&quot;)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(def development?
+     (not production?))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.exceptions" name="gears.exceptions"><h1 class="project-name">gears.exceptions</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.exceptions
+  (:use [clojure.contrib.str-utils]))</pre></tr><tr><td class="docs"><p>Take an exception and create a vector of strings from it</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn stack-trace-as-vec
+  [e]
+  (reduce #(cons (.toString %2) %1) [] (.getStackTrace e)))</pre></tr><tr><td class="docs"><p>Take an exception and create a stack-trace string from it</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn stack-trace-as-string
+  [e]
+  (str-join &quot;\n&quot; (stack-trace-as-vec e)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.hash-map" name="gears.hash-map"><h1 class="project-name">gears.hash-map</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.hash-map
   (:require [gears.list :as list]))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the keys of m and reconstructs the hash-map</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-keys
@@ -2580,13 +2598,20 @@ $(document).ready(function() {
 			 key k)
 		       acc))
      [] all-key-values)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.http.middleware" name="gears.http.middleware"><h1 class="project-name">gears.http.middleware</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.http.middleware)</pre></tr><tr><td class="docs"><p>Creates a middleware wrapper that applies <code>wrapper</code> if <code>pred</code> is true</p>
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.http.middleware
+  (:use [gears.http]
+        [mmemail.core]
+        [gears.exceptions]
+        [sandbar.stateful-session])
+  (:require [aws-logging.core :as aws-logging]))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defn wrap-if
+  &quot;Creates a middleware wrapper that applies `wrapper` if `pred` is true&quot;
   [app pred wrapper &amp; args]
   (if pred
     (apply wrapper app args)
-    app))</pre></tr><tr><td class="docs"><p>Creates a failsafe wrapper that returns a 500 if any error occurs</p>
+    app))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defn wrap-failsafe
+  &quot;Creates a failsafe wrapper that returns a 500 if any error occurs&quot;
   [handler]
   (fn [req]
     (try
@@ -2595,10 +2620,115 @@ $(document).ready(function() {
 	(do
 	  {:status 500
 	   :headers {&quot;Content-Type&quot; &quot;text/plain&quot;}
-	   :body &quot;We're sorry, something went wrong.&quot;})))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.list" name="gears.list"><h1 class="project-name">gears.list</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+	   :body &quot;We're sorry, something went wrong.&quot;})))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn- wrap-exception
+  &quot;Creates a failsafe wrapper that emails an administrator and returns a 500 if any error occurs&quot;
+  [mailer exception-handler handler]
+  (fn [req]
+    (try
+      (handler req)
+      (catch Exception e
+	(do
+          (mailer {:subject (str &quot;Exception: &quot; (.toString e)) ;;mail the administrator
+                   :body (exception-handler e)})
+	  {:status 500
+	   :headers {&quot;Content-Type&quot; &quot;text/plain&quot;}
+	   :body &quot;We're sorry, something went wrong.  An administrator has been informed.&quot;})))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn wrap-email-on-exception
+  &quot;Mailer is in https://github.com/slagyr/mmemail format and contains connection information&quot;
+  [mailer exception-handler]
+  (partial wrap-exception mailer exception-handler))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn wrap-track
+  &quot;Requires that sandbar's wrap-stateful-session be utilized to enable session data.
+   Stores user action history based on the request.&quot;
+  [handler]
+  (fn [req]
+    (do
+      (let [current-history (or (session-get :track-history) [])
+            current-action {:ip (ip req)
+                          :uri (:uri req)
+                          :method (request-method req)}]
+        (session-set! :track-history (cons current-action current-history)))
+      (app req))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn- aws-log-connection
+  &quot;Logs a connection to Amazon's AWS&quot;
+  [log-handler identifier handler]
+  (fn [req]
+    (do
+      ;; we should probably make sure the request isn't for a static file...
+      (aws-logging/store-message :connection
+				 (log-handler req)
+				 identifier)
+      (app req))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn- wrap-aws-log-connection
+  &quot;Creates a wrapper to log connections to Amazon Web Service.
+   Logger is a function that takes a request and returns a string.
+   Identifier is the string identifier for the service.&quot;
+  [logger identifier]
+  (partial aws-log-connection log-handler identifier))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.http" name="gears.http"><h1 class="project-name">gears.http</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.http)</pre></tr><tr><td class="docs"><p>Pull the ip address from a given request</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn ip
+  [request]
+  (or ((:headers request) &quot;x-forwarded-for&quot;)
+      (:remote-addr request)))</pre></tr><tr><td class="docs"><p>Find the referrer from a given request</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn referrer
+  [request]
+  ((:headers request) &quot;referer&quot;)) ;;yes, referer SHOULD be spelled wrong</pre></tr><tr><td class="docs"><p>yes, referer SHOULD be spelled wrong</p>
+</td><td class="codes" /></tr><tr><td class="docs"><p>Get the request method for a given request</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn request-method
+  [request]
+  (:request-method request))</pre></tr><tr><td class="docs"><p>Get the query-string for a given request</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn query-string
+  [request]
+  (:query-string request))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn query-string-to-keywords
+  &quot;Take the query-string and parse it into keywords&quot;
+  [query-string]
+  (into {} (for [[_ k v] (re-seq #&quot;([^&amp;=]+)=([^&amp;]+)&quot; req)]
+             [(keyword k) v])))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.list" name="gears.list"><h1 class="project-name">gears.list</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.list)</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and a list <code>l</code> and creates a hash-map with keys l and values <code>(f l)</code></p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-list-to-hashmap
   [l f]
-  (reduce (fn [m e] (assoc m e (f e)))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.set" name="gears.set"><h1 class="project-name">gears.set</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_gears.date">gears.date</li><li class="floating-toc-li" id="floating-toc_gears.hash-map">gears.hash-map</li><li class="floating-toc-li" id="floating-toc_gears.http.middleware">gears.http.middleware</li><li class="floating-toc-li" id="floating-toc_gears.list">gears.list</li><li class="floating-toc-li" id="floating-toc_gears.set">gears.set</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+  (reduce (fn [m e] (assoc m e (f e)))))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.regex" name="gears.regex"><h1 class="project-name">gears.regex</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.regex)</pre></tr><tr><td class="docs"><p>Take a list of regex expressions and see if any of them match the given value</p>
+</td><td class="codes" /><pre class="brush: clojure">(defmacro matches-any-in?
+  [value match-list]
+  `(reduce (fn [acc# e#] (or acc# (not (nil? (re-find e# ~value))))) false ~match-list))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.rss" name="gears.rss"><h1 class="project-name">gears.rss</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.rss
+  (:use clojure.contrib.prxml))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn- articles [data]
+  (reduce
+   (fn [feed v]
+     (conj feed
+           [:item
+            [:title (:title v)]
+            [:url (:url v)]
+            [:description (:description v)]]))
+   () data))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defn rss-stream [title link description data]
+  &quot;Creates an rss-stream for series of data.
+   `title` is the title of the stream.
+   `link` is the URL of the stream host.
+   `description` is the description of the stream.
+   `data` is a list of maps with :title, :url, and :description fields.
+   Example:
+      `(rss-stream \&quot;My Blog\&quot; \&quot;http://someurl.com\&quot; \&quot;A description of my blog\&quot;
+                   [{:title \&quot;First Post!\&quot; :url \&quot;http://someurl.com/first-post\&quot;
+                     :description \&quot;The first post for my blog!\&quot;}
+                    {:title \&quot;Post Numero Dos!\&quot; :url \&quot;http://someurl.com/post-numero-dos\&quot;
+                     :description \&quot;My second post!  I discuss my travels in Spain.\&quot;}])`&quot;
+  (with-out-str
+    (prxml [:decl! {:version &quot;1.0&quot;}]
+           [:rss {:version &quot;2.0&quot;}
+            [:channel
+             [:title title]
+             [:link link]
+             [:description description]
+             (articles data)]])))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.set" name="gears.set"><h1 class="project-name">gears.set</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.util" name="gears.util"><h1 class="project-name">gears.util</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.util
+  (:import (java.util UUID)))</pre></tr><tr><td class="docs"><p>Construct a unique identifier as a string</p>
+</td><td class="codes" /><pre class="brush: clojure">(defn uuid
+  []
+  (.toString (UUID/randomUUID)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_gears.date">gears.date</li><li class="floating-toc-li" id="floating-toc_gears.development-mode">gears.development-mode</li><li class="floating-toc-li" id="floating-toc_gears.exceptions">gears.exceptions</li><li class="floating-toc-li" id="floating-toc_gears.hash-map">gears.hash-map</li><li class="floating-toc-li" id="floating-toc_gears.http.middleware">gears.http.middleware</li><li class="floating-toc-li" id="floating-toc_gears.http">gears.http</li><li class="floating-toc-li" id="floating-toc_gears.list">gears.list</li><li class="floating-toc-li" id="floating-toc_gears.regex">gears.regex</li><li class="floating-toc-li" id="floating-toc_gears.rss">gears.rss</li><li class="floating-toc-li" id="floating-toc_gears.set">gears.set</li><li class="floating-toc-li" id="floating-toc_gears.util">gears.util</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
        SyntaxHighlighter.all()</script></body></html>
