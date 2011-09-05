@@ -3,13 +3,13 @@
 
 (defn map-to-keys
   "Takes a function `f` and maps it to the keys of m and reconstructs the hash-map"
-  [m f]
-  (into {} (for [[k v] m] ([(f k) v]))))
+  [f m]
+  (into {} (for [[k v] m] [(f k) v])))
 
 (defn map-to-values
   "Takes a function `f` and maps it to the values of m and reconstructs the hash-map"
-  [m f]
-  (into {} (for [[k v] m] ([k (f v)]))))
+  [f m]
+  (into {} (for [[k v] m] [k (f v)])))
 
 (defn merge-maps-by-key
   "Given two maps, merge shared keys into a list.

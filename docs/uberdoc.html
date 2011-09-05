@@ -2527,7 +2527,7 @@ $(document).ready(function() {
 
 })
 </script><title>gears -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">gears</h1><h2 class="project-version">1.0.0-SNAPSHOT</h2><br /><p>FIXME: write</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">mmemail</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">sandbar/sandbar</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date">gears.date</a></li><li><a href="#gears.development-mode">gears.development-mode</a></li><li><a href="#gears.exceptions">gears.exceptions</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.http">gears.http</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.regex">gears.regex</a></li><li><a href="#gears.rss">gears.rss</a></li><li><a href="#gears.set">gears.set</a></li><li><a href="#gears.util">gears.util</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date" name="gears.date"><h1 class="project-name">gears.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">mmemail</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">sandbar/sandbar</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date">gears.date</a></li><li><a href="#gears.development-mode">gears.development-mode</a></li><li><a href="#gears.exceptions">gears.exceptions</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.http">gears.http</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.regex">gears.regex</a></li><li><a href="#gears.rss">gears.rss</a></li><li><a href="#gears.seq">gears.seq</a></li><li><a href="#gears.set">gears.set</a></li><li><a href="#gears.tests">gears.tests</a></li><li><a href="#gears.util">gears.util</a></li><li><a href="#gears.vector">gears.vector</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date" name="gears.date"><h1 class="project-name">gears.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.date
   (:import [java.util.Date]
 	   [java.text DateFormat SimpleDateFormat]
@@ -2549,7 +2549,8 @@ $(document).ready(function() {
   ([date format]  (let [df (SimpleDateFormat. format)]
                     (.format df date))))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defn string-to-date
-  &quot;Convert a formatted string to a Java Date object.  If no format is given, automatically attempts to convert with yyyy-MM-dd and MM/dd/yyyy formats.&quot;
+  &quot;Convert a formatted string to a Java Date object.  If no format is given,
+   automatically attempts to convert with yyyy-MM-dd and MM/dd/yyyy formats.&quot;
   [date-string &amp; given-formats]
   (let [formats (or given-formats [&quot;MM/dd/yyyy&quot; &quot;yyyy-MM-dd&quot;])
         date-objects (filter identity (map #(try (.parse (SimpleDateFormat. %) date-string)
@@ -2573,11 +2574,11 @@ $(document).ready(function() {
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.hash-map
   (:require [gears.list :as list]))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the keys of m and reconstructs the hash-map</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-keys
-  [m f]
-  (into {} (for [[k v] m] ([(f k) v]))))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the values of m and reconstructs the hash-map</p>
+  [f m]
+  (into {} (for [[k v] m] [(f k) v])))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the values of m and reconstructs the hash-map</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-values
-  [m f]
-  (into {} (for [[k v] m] ([k (f v)]))))</pre></tr><tr><td class="docs"><p>Given two maps, merge shared keys into a list.
+  [f m]
+  (into {} (for [[k v] m] [k (f v)])))</pre></tr><tr><td class="docs"><p>Given two maps, merge shared keys into a list.
    <code>(merge-sets-by-key {:a :b, :c :d} {:a :e, :c :f})</code>
    -> <code>{:a (:b :e), :c (:d :f)}</code></p>
 </td><td class="codes" /><pre class="brush: clojure">(defn merge-maps-by-key
@@ -2724,11 +2725,64 @@ $(document).ready(function() {
              [:title title]
              [:link link]
              [:description description]
-             (articles data)]])))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.set" name="gears.set"><h1 class="project-name">gears.set</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.util" name="gears.util"><h1 class="project-name">gears.util</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+             (articles data)]])))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.seq" name="gears.seq"><h1 class="project-name">gears.seq</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.seq
+  (:require [gears.hash-map :as hash-map]))</pre></tr><tr><td class="docs"><p>Traverse a collection of collections, applying a function to the elements of that collectin.
+   By default, applies to values, not keys, of a map</p>
+</td><td class="codes" /><pre class="brush: clojure">(defmulti traverse
+  (fn [f coll] (class coll)))
+(defmethod traverse clojure.lang.PersistentVector [f v] (map (partial traverse f) v))
+(defmethod traverse clojure.lang.PersistentList [f l] (map (partial traverse f) l))
+(defmethod traverse clojure.lang.PersistentArrayMap [f m] (hash-map/map-to-values (partial traverse f) m))</pre></tr><tr><td class="docs"><p>Should this map a set to a list, or back to a set?  What if the function creates two identical values from within the set?  For now, we'll keep it a list, since that is what clojure's map function does</p>
+</td><td class="codes" /><pre class="brush: clojure">(defmethod traverse clojure.lang.PersistentHashSet [f s] (map (partial traverse f) s))
+(defmethod traverse :default [f s] (if (sequential? s)
+                                     (map (partial traverse f) s)
+                                     (f s)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.set" name="gears.set"><h1 class="project-name">gears.set</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.tests" name="gears.tests"><h1 class="project-name">gears.tests</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.tests)</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is true for all elements in <code>coll</code></p>
+</td><td class="codes" /><pre class="brush: clojure">(defn true-for-all
+  [pred coll]
+  (reduce (fn [acc e] (and (pred e) acc)) true coll))</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is false for all elements in <code>coll</code></p>
+</td><td class="codes" /><pre class="brush: clojure">(defn false-for-all
+  [pred coll]
+  (reduce (fn [acc e] (and (not (pred e)) acc)) true coll))</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is true for any element in <code>coll</code></p>
+</td><td class="codes" /><pre class="brush: clojure">(defn true-for-any
+  [pred coll]
+  (not (false-for-all pred coll)))</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is false for any element in <code>coll</code></p>
+</td><td class="codes" /><pre class="brush: clojure">(defn false-for-any
+  [pred coll]
+  (not (true-for-all pred coll)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.util" name="gears.util"><h1 class="project-name">gears.util</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.util
   (:import (java.util UUID)))</pre></tr><tr><td class="docs"><p>Construct a unique identifier as a string</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn uuid
   []
-  (.toString (UUID/randomUUID)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_gears.date">gears.date</li><li class="floating-toc-li" id="floating-toc_gears.development-mode">gears.development-mode</li><li class="floating-toc-li" id="floating-toc_gears.exceptions">gears.exceptions</li><li class="floating-toc-li" id="floating-toc_gears.hash-map">gears.hash-map</li><li class="floating-toc-li" id="floating-toc_gears.http.middleware">gears.http.middleware</li><li class="floating-toc-li" id="floating-toc_gears.http">gears.http</li><li class="floating-toc-li" id="floating-toc_gears.list">gears.list</li><li class="floating-toc-li" id="floating-toc_gears.regex">gears.regex</li><li class="floating-toc-li" id="floating-toc_gears.rss">gears.rss</li><li class="floating-toc-li" id="floating-toc_gears.set">gears.set</li><li class="floating-toc-li" id="floating-toc_gears.util">gears.util</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+  (.toString (UUID/randomUUID)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.vector" name="gears.vector"><h1 class="project-name">gears.vector</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(ns gears.vector
+  (:require [gears.tests :as tests]
+            [gears.hash-map :as hash-map]))</pre></tr><tr><td class="docs"><p>(gen-and-load-class 'IllegalSequence :extends Exception)</p>
+</td><td class="codes" /></tr><tr><td class="docs"><p>Takes anything that quacks like a vector and turns it into a vector.
+   For maps, it means that keys must be integers.
+   If not, it will return back the map.</p>
+</td><td class="codes" /><pre class="brush: clojure">(defmulti quack-vec
+  (fn [coll] (class coll)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod quack-vec clojure.lang.PersistentVector [v]
+  (vec (map quack-vec v)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod quack-vec clojure.lang.PersistentList [l]
+  (vec (map quack-vec l)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod quack-vec clojure.lang.PersistentArrayMap [m]
+  &quot;Takes a map `m` and transforms it into a vector if all the keys are integers.
+   Any gaps are filled in with nils.  For example,
+   `(quack-vec {0 :a 1 :b 5 :c})` returns `[:a :b nil nil nil :c]`
+   This is a deep method, meaning that if will apply quack-vec to all
+   values in the map, whether the whole map becomes a vector or not.&quot;
+  (let [indexes (keys m)]
+    (if (tests/true-for-all integer? indexes)
+      (vec (map (fn [index] (or (quack-vec (get m index)) nil))
+           (range 0 (inc (apply max indexes)))))
+      (hash-map/map-to-values quack-vec m))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod quack-vec :default [s]
+  (if (sequential? s)
+    (throw (Exception.
+            (str &quot;Illegal sequence of type &quot; (type s) &quot; provided.&quot;)))
+    s))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_gears.date">gears.date</li><li class="floating-toc-li" id="floating-toc_gears.development-mode">gears.development-mode</li><li class="floating-toc-li" id="floating-toc_gears.exceptions">gears.exceptions</li><li class="floating-toc-li" id="floating-toc_gears.hash-map">gears.hash-map</li><li class="floating-toc-li" id="floating-toc_gears.http.middleware">gears.http.middleware</li><li class="floating-toc-li" id="floating-toc_gears.http">gears.http</li><li class="floating-toc-li" id="floating-toc_gears.list">gears.list</li><li class="floating-toc-li" id="floating-toc_gears.regex">gears.regex</li><li class="floating-toc-li" id="floating-toc_gears.rss">gears.rss</li><li class="floating-toc-li" id="floating-toc_gears.seq">gears.seq</li><li class="floating-toc-li" id="floating-toc_gears.set">gears.set</li><li class="floating-toc-li" id="floating-toc_gears.tests">gears.tests</li><li class="floating-toc-li" id="floating-toc_gears.util">gears.util</li><li class="floating-toc-li" id="floating-toc_gears.vector">gears.vector</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
        SyntaxHighlighter.all()</script></body></html>
