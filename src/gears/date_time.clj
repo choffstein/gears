@@ -1,4 +1,4 @@
-(ns gears.date
+(ns gears.date-time
   (:import [java.util.Date]
 	   [java.text DateFormat SimpleDateFormat]
 	   [java.util.Calendar]

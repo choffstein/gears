@@ -39,9 +39,9 @@
 	   :body "We're sorry, something went wrong.  An administrator has been informed."})))))
 
 (defn wrap-email-on-exception
-  "Mailer is in https://github.com/slagyr/mmemail format and contains connection information"
-  [mailer exception-handler]
-  (partial wrap-exception mailer exception-handler))
+  "`mailbox-info` follows the configuration of https://github.com/slagyr/mmemail and must contain connection information"
+  [mailbox-info exception-handler]
+  (partial wrap-exception  (create-mailer mailbox-info) exception-handler))
 
 (defn wrap-track
   "Requires that sandbar's wrap-stateful-session be utilized to enable session data.
