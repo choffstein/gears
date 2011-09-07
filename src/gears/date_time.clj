@@ -6,14 +6,14 @@
 
 (defn todays-date-as-str
   "Today's date as a yyyy-MM-dd string, unless a format is provided."
-  ([] (todays-date "yyyy-MM-dd"))
+  ([] (todays-date-as-str "yyyy-MM-dd"))
   ([format] (let [df (new java.text.SimpleDateFormat format)
                   today (new java.util.Date)]
               (.format df today))))
 
 (defn current-time-as-str
   "The current time in yyyy-MM-dd'T'HH:mmZ unless a format is provided."
-  ([] (current-time "yyyy-MM-dd'T'HH:mmZ"))
+  ([] (current-time-as-str "yyyy-MM-dd'T'HH:mmZ"))
   ([format]  (let [df (java.text.SimpleDateFormat. format)]
                (.toString (.format df (java.util.Date.))))))
 
