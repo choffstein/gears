@@ -1,10 +1,12 @@
 (ns gears.date-time
-  (:use [clj-time core coerce]))
+  (:use [clj-time.core]
+        [clj-time.format]
+        [clj-time.coerce]))
 
 (defn todays-date-as-str
   "Today's date as a yyyy-MM-dd string, unless a format is provided."
   ([] (todays-date-as-str "yyyy-MM-dd"))
-  ([format] (let [custom-formatter (formatter format))
+  ([format] (let [custom-formatter (formatter format)
                   today (now)]
               (unparse custom-formatter today))))
 
