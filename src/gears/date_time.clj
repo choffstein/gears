@@ -17,7 +17,7 @@
 (defn date-to-string
   "Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided."
   ([date] (date-to-string "yyyy-MM-dd"))
-  ([date format]  (let [custom-formater (formatter format)]
+  ([date format]  (let [custom-formatter (formatter format)]
                     (parse custom-formatter date))))
 
 (defn string-to-date
