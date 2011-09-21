@@ -13,3 +13,6 @@
 (defmethod traverse :default [f s] (if (sequential? s)
                                      (map (partial traverse f) s)
                                      (f s)))
+
+(defn drop-nth [coll index]
+  (keep-indexed (fn [i item] (if (not (= index i)) item nil)) coll))

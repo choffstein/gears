@@ -31,3 +31,5 @@
     (if (empty? date-objects)
         (throw (java.text.ParseException. "Unable to parse string" 0))
         (first date-objects))))
+
+(defn every-other [coll] (take-nth 2 coll))
