@@ -2,8 +2,17 @@
   (:require [gears.hash-map :as hash-map]))
 
 (defmulti traverse
-  "Traverse a collection of collections, applying a function to the elements of that collectin.
-   By default, applies to values, not keys, of a map"
+  "Traverse a collection of collections, applying a function to the elements of that collection.
+   By default, applies to values, not keys, of a map
+
+   => (traverse #(+ % 1) [1 2 3 4])
+   [2 3 4 5]
+   => (traverse #(+ % 1) '(1 2 3 4))
+   (2 3 4 5)
+   => (traverse #(+ % 1) {:a 1 :b 2 :c 3})
+   {:a 2 :b 3 :c 4}
+   => (traverse #(+ % 1) #{1 2 3})
+   (2 3 4)"
   (fn [f coll] (class coll)))
 (defmethod traverse clojure.lang.PersistentVector [f v] (map (partial traverse f) v))
 (defmethod traverse clojure.lang.PersistentList [f l] (map (partial traverse f) l))
@@ -51,7 +60,9 @@
   => (every-even-index [1 2])
   [2]
   => (every-even-index [1 2 3])
-  [2]"
+  [2]
+  => (every-even-index [1 2 3 4])
+  [2 4]"
   [coll]
   (every-other (drop 1 coll)))
 

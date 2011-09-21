@@ -2,8 +2,7 @@
   (:use [gears.http]
         [mmemail.core]
         [gears.exceptions]
-        [sandbar.stateful-session])
-  (:require [aws-logging.core :as aws-logging]))
+        [sandbar.stateful-session]))
 
 (defn wrap-if
   "Creates a middleware wrapper that applies `wrapper` if `pred` is true"
