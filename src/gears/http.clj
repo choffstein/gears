@@ -22,7 +22,10 @@
   (:query-string request))
 
 (defn query-string-to-keywords
-  "Take the query-string and parse it into keywords"
+  "Take the query-string and parse it into keywords
+
+  => (query-string-to-keywords \"file=test&color=red\")
+  {:file \"test\", :color \"red\"}"
   [query-string]
   (into {} (for [[_ k v] (re-seq #"([^&=]+)=([^&]+)" query-string)]
              [(keyword k) v])))
