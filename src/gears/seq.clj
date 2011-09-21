@@ -14,5 +14,57 @@
                                      (map (partial traverse f) s)
                                      (f s)))
 
-(defn drop-nth [coll index]
+(defn drop-nth
+  "Drop the nth item from coll
+
+   => (drop-nth [1 2 3 4 5 6] 4)
+   [1 2 3 4 6]
+   => (drop-nth [] 5)
+   []
+   => (drop-nth [1] 2)
+   [1]"
+  [coll index]
   (keep-indexed (fn [i item] (if (not (= index i)) item nil)) coll))
+
+
+(defn every-other
+  "Take every other element in `coll`
+
+  => (every-other [])
+  []
+  => (every-other [1])
+  [1]
+  => (every-other [1 2])
+  [1]
+  => (every-other [1 2 3])
+  [1 3]"
+  [coll]
+  (take-nth 2 coll))
+
+(defn every-even-index
+  "Takes all the even entries of `coll`
+
+  => (every-even-index [])
+  []
+  => (every-even-index [1])
+  []
+  => (every-even-index [1 2])
+  [2]
+  => (every-even-index [1 2 3])
+  [2]"
+  [coll]
+  (every-other (drop 1 coll)))
+
+(defn every-odd-index
+  "Takes all the odd entries of `coll`
+
+  => (every-odd-index [])
+  []
+  => (every-odd-index [1])
+  [1]
+  => (every-odd-index [1 2])
+  [1]
+  => (every-odd-index [1 2 3])
+  [1 3]"
+  [coll]
+  (every-other coll))

@@ -6,5 +6,6 @@
                  [sandbar/sandbar "0.3.0"]
                  [clj-time "0.3.0"]]
   :dev-dependencies [[swank-clojure "1.4.0-SNAPSHOT"]
-		     [lein-marginalia "0.6.0"]]
+		     [lein-marginalia "0.6.0"]
+                     [clj-doc-test "1.0.0-SNAPSHOT"]]
   :jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n"])

@@ -24,5 +24,5 @@
 (defn query-string-to-keywords
   "Take the query-string and parse it into keywords"
   [query-string]
-  (into {} (for [[_ k v] (re-seq #"([^&=]+)=([^&]+)" req)]
+  (into {} (for [[_ k v] (re-seq #"([^&=]+)=([^&]+)" query-string)]
              [(keyword k) v])))

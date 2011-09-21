@@ -53,23 +53,5 @@
             current-action {:ip (ip req)
                           :uri (:uri req)
                           :method (request-method req)}]
-        (session-set! :track-history (cons current-action current-history)))
-      (app req))))
-
-(defn- aws-log-connection
-  "Logs a connection to Amazon's AWS"
-  [log-handler identifier handler]
-  (fn [req]
-    (do
-      ;; we should probably make sure the request isn't for a static file...
-      (aws-logging/store-message :connection
-				 (log-handler req)
-				 identifier)
-      (app req))))
-
-(defn- wrap-aws-log-connection
-  "Creates a wrapper to log connections to Amazon Web Service.
-   Logger is a function that takes a request and returns a string.
-   Identifier is the string identifier for the service."
-  [logger identifier]
-  (partial aws-log-connection log-handler identifier))
+        (session-put! :track-history (cons current-action current-history)))
+      (handler req))))
