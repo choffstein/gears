@@ -2527,7 +2527,7 @@ $(document).ready(function() {
 
 })
 </script><title>gears -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">gears</h1><h2 class="project-version">1.0.0-SNAPSHOT</h2><br /><p>FIXME: write</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">mmemail</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">sandbar/sandbar</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">swank-clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0-SNAPSHOT</td></tr><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr><tr><td class="dep-name">clj-doc-test</td><td class="dotted"><hr /></td><td class="dep-version">1.0.0-SNAPSHOT</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date-time">gears.date-time</a></li><li><a href="#gears.development-mode">gears.development-mode</a></li><li><a href="#gears.exceptions">gears.exceptions</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.http">gears.http</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.regex">gears.regex</a></li><li><a href="#gears.rss">gears.rss</a></li><li><a href="#gears.seq">gears.seq</a></li><li><a href="#gears.set">gears.set</a></li><li><a href="#gears.tests">gears.tests</a></li><li><a href="#gears.util">gears.util</a></li><li><a href="#gears.vector">gears.vector</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date-time" name="gears.date-time"><h1 class="project-name">gears.date-time</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">mmemail</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">sandbar/sandbar</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.3.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">swank-clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0-SNAPSHOT</td></tr><tr><td class="dep-name">lein-marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr><tr><td class="dep-name">lein-clj-doc-test</td><td class="dotted"><hr /></td><td class="dep-version">0.0.1</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#gears.date-time">gears.date-time</a></li><li><a href="#gears.development-mode">gears.development-mode</a></li><li><a href="#gears.exceptions">gears.exceptions</a></li><li><a href="#gears.hash-map">gears.hash-map</a></li><li><a href="#gears.http.middleware">gears.http.middleware</a></li><li><a href="#gears.http">gears.http</a></li><li><a href="#gears.list">gears.list</a></li><li><a href="#gears.regex">gears.regex</a></li><li><a href="#gears.rss">gears.rss</a></li><li><a href="#gears.seq">gears.seq</a></li><li><a href="#gears.set">gears.set</a></li><li><a href="#gears.tests">gears.tests</a></li><li><a href="#gears.util">gears.util</a></li><li><a href="#gears.vector">gears.vector</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.date-time" name="gears.date-time"><h1 class="project-name">gears.date-time</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.date-time
   (:require [clj-time.core :as time]
             [clj-time.format :as format]
@@ -2572,23 +2572,31 @@ $(document).ready(function() {
   (str-join &quot;\n&quot; (stack-trace-as-vec e)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.hash-map" name="gears.hash-map"><h1 class="project-name">gears.hash-map</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.hash-map
   (:require [gears.list :as list]))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the keys of m and reconstructs the hash-map</p>
+
+<p>  => (map-to-keys #(+ % 1) {1 5, 2 4})
+  {2 5, 3 4}</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-keys
   [f m]
   (into {} (for [[k v] m] [(f k) v])))</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and maps it to the values of m and reconstructs the hash-map</p>
+
+<p>  => (map-to-values #(+ % 1) {1 5, 2 4})
+  {1 6, 2 5}</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-to-values
   [f m]
-  (into {} (for [[k v] m] [k (f v)])))</pre></tr><tr><td class="docs"><p>Given two maps, merge shared keys into a list.
-   <code>(merge-maps-by-key {:a :b, :c :d} {:a :e, :c :f})</code>
-   -> <code>{:a (:b :e), :c (:d :f)}</code></p>
+  (into {} (for [[k v] m] [k (f v)])))</pre></tr><tr><td class="docs"><p>Given two maps, merge shared keys into a list.</p>
+
+<p>   => (merge-maps-by-key {:a :b, :c :d} {:a :e, :c :f})
+   {:a (:b :e), :c (:d :f)}</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn merge-maps-by-key
   [&amp; maps]
   (let [all-key-values (set (flatten (map keys maps)))]
     (list/map-list-to-hashmap #(filter identity
                                        (map (fn [m] (get m %)) maps))
                               all-key-values)))</pre></tr><tr><td class="docs"><p>Given a list of 'sets' (using that term loosely here, because they aren't actual clojure sets,
-   merge them by a given key.  For example:
-   <code>(merge-maps-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)</code>
-   -> <code>[{:a 5 :b 6 :c 12} {:a 6 :b 7 :c 14} {:a 8 :b 9 :c 18}]</code></p>
+   merge them by a given key.  For example:</p>
+
+<p>   => (merge-maps-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)
+   ({:a 8 :b 9 :c 18} {:a 6 :b 7 :c 14} {:a 5 :b 6 :c 12})</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn merge-maps-by-key-value
   [sets key]
   (let [all-key-values (set (flatten (map #(pmap (fn [m] (get m key)) %) sets)))]
@@ -2604,8 +2612,7 @@ $(document).ready(function() {
   (:use [gears.http]
         [mmemail.core]
         [gears.exceptions]
-        [sandbar.stateful-session])
-  (:require [aws-logging.core :as aws-logging]))</pre></tr><tr><td class="docs">
+        [sandbar.stateful-session]))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defn wrap-if
   &quot;Creates a middleware wrapper that applies `wrapper` if `pred` is true&quot;
   [app pred wrapper &amp; args]
@@ -2667,15 +2674,26 @@ $(document).ready(function() {
 </td><td class="codes" /><pre class="brush: clojure">(defn query-string
   [request]
   (:query-string request))</pre></tr><tr><td class="docs"><p>Take the query-string and parse it into keywords</p>
+
+<p>  => (query-string-to-keywords "file=test&amp;color=red")
+  {:file "test", :color "red"}</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn query-string-to-keywords
   [query-string]
   (into {} (for [[_ k v] (re-seq #&quot;([^&amp;=]+)=([^&amp;]+)&quot; query-string)]
              [(keyword k) v])))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.list" name="gears.list"><h1 class="project-name">gears.list</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.list)</pre></tr><tr><td class="docs"><p>Takes a function <code>f</code> and a list <code>l</code> and creates a hash-map with keys l and values <code>(f l)</code></p>
+
+<p>  => (map-list-to-hashmap #(+ % 5) '(1 2 3 4 5))
+  {1 6, 2 7, 3 8, 4 9, 5 10}</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn map-list-to-hashmap
   [f l]
   (reduce (fn [m e] (assoc m e (f e))) {} l))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.regex" name="gears.regex"><h1 class="project-name">gears.regex</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.regex)</pre></tr><tr><td class="docs"><p>Take a list of regex expressions and see if any of them match the given value</p>
+
+<p>  => (matches-any-in? "abc" [#"abc" "efg"])
+  true
+  => (matches-any-in? "abc" [#"efg" #"hik"])
+  false</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn matches-any-in?
   [value match-list]
   (reduce (fn [acc e] (or acc (not (nil? (re-find e value))))) false match-list))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.rss" name="gears.rss"><h1 class="project-name">gears.rss</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
@@ -2711,8 +2729,17 @@ $(document).ready(function() {
              [:description description]
              (articles data)]])))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.seq" name="gears.seq"><h1 class="project-name">gears.seq</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.seq
-  (:require [gears.hash-map :as hash-map]))</pre></tr><tr><td class="docs"><p>Traverse a collection of collections, applying a function to the elements of that collectin.
+  (:require [gears.hash-map :as hash-map]))</pre></tr><tr><td class="docs"><p>Traverse a collection of collections, applying a function to the elements of that collection.
    By default, applies to values, not keys, of a map</p>
+
+<p>   => (traverse #(+ % 1) [1 2 3 4])
+   [2 3 4 5]
+   => (traverse #(+ % 1) '(1 2 3 4))
+   (2 3 4 5)
+   => (traverse #(+ % 1) {:a 1 :b 2 :c 3})
+   {:a 2 :b 3 :c 4}
+   => (traverse #(+ % 1) #{1 2 3})
+   (2 3 4)</p>
 </td><td class="codes" /><pre class="brush: clojure">(defmulti traverse
   (fn [f coll] (class coll)))
 (defmethod traverse clojure.lang.PersistentVector [f v] (map (partial traverse f) v))
@@ -2723,62 +2750,84 @@ $(document).ready(function() {
                                      (map (partial traverse f) s)
                                      (f s)))</pre></tr><tr><td class="docs"><p>Drop the nth item from coll</p>
 
-<p>   `=> (drop-nth [1 2 3 4 5 6] 4)
+<p>   => (drop-nth [1 2 3 4 5 6] 4)
    [1 2 3 4 6]
    => (drop-nth [] 5)
    []
    => (drop-nth [1] 2)
-   [1]`</p>
+   [1]</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn drop-nth
   [coll index]
   (keep-indexed (fn [i item] (if (not (= index i)) item nil)) coll))</pre></tr><tr><td class="docs"><p>Take every other element in <code>coll</code></p>
 
-<p>  `=> (every-other [])
+<p>  => (every-other [])
   []
   => (every-other [1])
   [1]
   => (every-other [1 2])
   [1]
   => (every-other [1 2 3])
-  [1 3]`</p>
+  [1 3]</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn every-other
   [coll]
   (take-nth 2 coll))</pre></tr><tr><td class="docs"><p>Takes all the even entries of <code>coll</code></p>
 
-<p>  `=> (every-even-index [])
+<p>  => (every-even-index [])
   []
   => (every-even-index [1])
   []
   => (every-even-index [1 2])
   [2]
   => (every-even-index [1 2 3])
-  [2]`</p>
+  [2]
+  => (every-even-index [1 2 3 4])
+  [2 4]</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn every-even-index
   [coll]
   (every-other (drop 1 coll)))</pre></tr><tr><td class="docs"><p>Takes all the odd entries of <code>coll</code></p>
 
-<p>  `=> (every-odd-index [])
+<p>  => (every-odd-index [])
   []
   => (every-odd-index [1])
   [1]
   => (every-odd-index [1 2])
   [1]
   => (every-odd-index [1 2 3])
-  [1 3]`</p>
+  [1 3]</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn every-odd-index
   [coll]
   (every-other coll))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.set" name="gears.set"><h1 class="project-name">gears.set</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.set)</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.tests" name="gears.tests"><h1 class="project-name">gears.tests</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.tests)</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is true for all elements in <code>coll</code></p>
+
+<p>  => (true-for-all #(= % 5) [5 5 5 5])
+  true
+  => (true-for-all #(= % 5) [5 6 5 5])
+  false</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn true-for-all
   [pred coll]
   (reduce (fn [acc e] (and (pred e) acc)) true coll))</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is false for all elements in <code>coll</code></p>
+
+<p>  => (false-for-all #(= % 5) [6 6 6 6])
+  true
+  => (false-for-all #(= % 5) [5 6 6 6])
+  false</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn false-for-all
   [pred coll]
   (reduce (fn [acc e] (and (not (pred e)) acc)) true coll))</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is true for any element in <code>coll</code></p>
+
+<p>  => (true-for-any #(= % 5) [1 2 3 4 5 6])
+  true
+  => (true-for-any #(= % 5) [1 2 3 4])
+  false</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn true-for-any
   [pred coll]
   (not (false-for-all pred coll)))</pre></tr><tr><td class="docs"><p>Checks to see if <code>pred</code> is false for any element in <code>coll</code></p>
+
+<p>  => (false-for-any #(= % 5) [1 2 3 4 5 6])
+  true
+  => (false-for-any #(= % 5) [5 5 5 5])
+  false</p>
 </td><td class="codes" /><pre class="brush: clojure">(defn false-for-any
   [pred coll]
   (not (true-for-all pred coll)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.util" name="gears.util"><h1 class="project-name">gears.util</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
@@ -2789,10 +2838,14 @@ $(document).ready(function() {
   (.toString (UUID/randomUUID)))</pre></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#gears.vector" name="gears.vector"><h1 class="project-name">gears.vector</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(ns gears.vector
   (:require [gears.tests :as tests]
-            [gears.hash-map :as hash-map]))</pre></tr><tr><td class="docs"><p>(gen-and-load-class 'IllegalSequence :extends Exception)</p>
-</td><td class="codes" /></tr><tr><td class="docs"><p>Takes anything that quacks like a vector and turns it into a vector.
+            [gears.hash-map :as hash-map]))</pre></tr><tr><td class="docs"><p>Takes anything that quacks like a vector and turns it into a vector.
    For maps, it means that keys must be integers.
-   If not, it will return back the map.</p>
+   If not, it will return back the map.  Recursive on all inner sequences.</p>
+
+<p>  => (quack-vec {1 :a 2 :b 5 :c})
+  [nil :a :b nil nil :c]
+  => (quack-vec {0 {2 :a 4 :b} 2 5})
+  [[nil nil :a nil :b] nil 5]</p>
 </td><td class="codes" /><pre class="brush: clojure">(defmulti quack-vec
   (fn [coll] (class coll)))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defmethod quack-vec clojure.lang.PersistentVector [v]
@@ -2807,10 +2860,39 @@ $(document).ready(function() {
    values in the map, whether the whole map becomes a vector or not.&quot;
   (let [indexes (keys m)]
     (if (tests/true-for-all integer? indexes)
-      (vec (map (fn [index] (or (quack-vec (get m index)) nil))
+      (vec (map (fn [index] (quack-vec (get m index)))
            (range 0 (inc (apply max indexes)))))
       (hash-map/map-to-values quack-vec m))))</pre></tr><tr><td class="docs">
 </td><td class="codes" /><pre class="brush: clojure">(defmethod quack-vec :default [s]
+  (if (sequential? s)
+    (throw (Exception.
+            (str &quot;Illegal sequence of type &quot; (type s) &quot; provided.&quot;)))
+    s))</pre></tr><tr><td class="docs"><p>Takes anything that quacks like a vector and turns it into a vector.
+   For maps, it means that keys must be integers.
+   If not, it will return back the map.  Non-recursive on inner sequences.</p>
+
+<p>  => (shallow-quack-vec {1 :a 2 :b 5 :c})
+  [nil :a :b nil nil :c]
+  => (shallow-quack-vec {0 {2 :a 4 :b} 2 5})
+  [{2 :a 4 :b} nil 5]</p>
+</td><td class="codes" /><pre class="brush: clojure">(defmulti shallow-quack-vec
+  (fn [coll] (class coll)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod shallow-quack-vec clojure.lang.PersistentVector [v]
+  (vec (map quack-vec v)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod shallow-quack-vec clojure.lang.PersistentList [l]
+  (vec (map quack-vec l)))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod shallow-quack-vec clojure.lang.PersistentArrayMap [m]
+  &quot;Takes a map `m` and transforms it into a vector if all the keys are integers.
+   Any gaps are filled in with nils.  For example,
+   `(quack-vec {0 :a 1 :b 5 :c})` returns `[:a :b nil nil nil :c]`
+   This is a deep method, meaning that if will apply quack-vec to all
+   values in the map, whether the whole map becomes a vector or not.&quot;
+  (let [indexes (keys m)]
+    (if (tests/true-for-all integer? indexes)
+      (vec (map (fn [index] (get m index))
+           (range 0 (inc (apply max indexes)))))
+      (hash-map/map-to-values quack-vec m))))</pre></tr><tr><td class="docs">
+</td><td class="codes" /><pre class="brush: clojure">(defmethod shallow-quack-vec :default [s]
   (if (sequential? s)
     (throw (Exception.
             (str &quot;Illegal sequence of type &quot; (type s) &quot; provided.&quot;)))

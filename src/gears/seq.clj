@@ -1,6 +1,22 @@
 (ns gears.seq
   (:require [gears.hash-map :as hash-map]))
 
+(defn rank-index
+  "Given a seq, returns a seq where the values are the positional rank of each member of the
+  seq in descending order
+
+   => (rank-index [])
+   ()
+   => (rank-index [1])
+   (1)
+   => (rank-index [3 1 2])
+   (1 3 2)
+   => (rank-index [-5 14 2])
+   (3 1 2)"
+  [coll]
+  (let [rank-map (zipmap (reverse (sort coll)) (range 1 (+ 1 (count coll))))]
+    (map #(get rank-map %) coll)))
+
 (defmulti traverse
   "Traverse a collection of collections, applying a function to the elements of that collection.
    By default, applies to values, not keys, of a map

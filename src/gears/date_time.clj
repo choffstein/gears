@@ -31,3 +31,9 @@
     (if (empty? date-objects)
         (throw (java.text.ParseException. "Unable to parse string" 0))
         (first date-objects))))
+
+(defn date-to-long [date]
+  (coerce/to-long date))
+
+(defn long-to-date [long]
+  (coerce/from-long long))
