@@ -28,13 +28,13 @@
                                        (map (fn [m] (get m %)) maps))
                               all-key-values)))
 
-(defn merge-maps-by-key-value
+(defn merge-map-seqs-by-key-value
   "Given a list of 'sets' (using that term loosely here, because they aren't actual clojure sets,
    merge them by a given key.  For example:
 
-   => (merge-maps-by-key-value [[{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}]] :a)
+   => (merge-map-seqs-by-key-value :a [{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}])
    ({:a 8 :b 9 :c 18} {:a 6 :b 7 :c 14} {:a 5 :b 6 :c 12})"
-  [sets key]
+  [key & sets]
   (let [all-key-values (set (flatten (map #(pmap (fn [m] (get m key)) %) sets)))]
     (reduce
      (fn [acc k] (cons (assoc (apply merge (flatten (map
@@ -44,3 +44,25 @@
 			 key k)
 		       acc))
      [] all-key-values)))
+
+(defn map-from-headers-and-rows
+  "Take the headers given and construct a map where the keys are the header values and the
+   values are the corresponding row values.  For example:
+
+   => (map-from-headers-and-rows [:a :b :c] [[1 2 3][4 5 6]])
+   ({:a 1 :b 2 :c 3} {:a 4 :b 5 :c 6})"
+  [headers rows]
+  {:pre [(> (count headers) 0)
+         (apply = (map count rows))
+         (= (count headers) (count (first rows)))]}
+  (reverse (reduce #(cons (zipmap headers %2) %1) [] rows)))
+
+(defn create-map-from-key-value
+  "Given a map, take a given key's value and create a new map using it as the key
+   and the rest of the map as the value
+
+  => (create-map-from-key-value {:a :b :c :d :e :f} :a)
+  {:b {:c :d :e :f}}"
+  [map key]
+  {:pre [(contains? map key)]}
+  {(get map key) (dissoc map key)})

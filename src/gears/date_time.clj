@@ -29,7 +29,7 @@
                                                                date-string)
                                                  (catch Exception e nil)) formats))]
     (if (empty? date-objects)
-        (throw (java.text.ParseException. "Unable to parse string" 0))
+        (throw (java.text.ParseException. (str "Unable to parse string: " date-string) 0))
         (first date-objects))))
 
 (defn date-to-long [date]
