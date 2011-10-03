@@ -66,3 +66,15 @@
   [map key]
   {:pre [(contains? map key)]}
   {(get map key) (dissoc map key)})
+
+(defn invert-outer-for-inner-keys
+  "Given a map of maps, where the inner maps share keys, invert the inner keys for the outter keys and merge the maps]
+
+  => (invert-outer-for-inner-keys {:a {:b :c :e :f} :d {:b :g :h :i}})
+  {:b {:a :c :d :g} :e {:a :f} :h {:d :i}}"
+  [outer-map]
+  (apply (partial merge-with merge)
+         (map (fn [outer-key]
+                (let [inner-map (get outer-map outer-key)]
+                  (into {} (for [[k v] inner-map]
+                             [k {outer-key v}])))) (keys outer-map))))
