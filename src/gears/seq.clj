@@ -9,7 +9,7 @@
   true
   => (in? 5 [1 2 3])
   false"
-  (tests/true-for-any #(= % x) coll))
+  (tests/true-for-any? #(= % x) coll))
 
 (defn rank-index
   "Given a seq, returns a seq where the values are the positional rank of each member of the
