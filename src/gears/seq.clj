@@ -105,3 +105,17 @@
   [1 3]"
   [coll]
   (every-other coll))
+
+(defmulti seqify
+  "Takes an input and returns it as a sequence if it isn't already.
+   Nil becomes an empty sequence.
+
+   => (seqify '(1 2 3))
+   (1 2 3)
+   => (seqify {:a :b})
+   ({:a :b})
+   => (seqify nil)
+   ()"
+  (fn [e] (seq? e)))
+(defmethod seqify true [e] e)
+(defmethod seqify false [e] (if (nil? e) (list) (list e)))

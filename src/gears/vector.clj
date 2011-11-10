@@ -26,7 +26,7 @@
    This is a deep method, meaning that if will apply quack-vec to all
    values in the map, whether the whole map becomes a vector or not."
   (let [indexes (keys m)]
-    (if (tests/true-for-all integer? indexes)
+    (if (tests/true-for-all? integer? indexes)
       (vec (map (fn [index] (quack-vec (get m index)))
            (range 0 (inc (apply max indexes)))))
       (hash-map/map-to-values quack-vec m))))
@@ -61,7 +61,7 @@
    This is a deep method, meaning that if will apply quack-vec to all
    values in the map, whether the whole map becomes a vector or not."
   (let [indexes (keys m)]
-    (if (tests/true-for-all integer? indexes)
+    (if (tests/true-for-all? integer? indexes)
       (vec (map (fn [index] (get m index))
            (range 0 (inc (apply max indexes)))))
       (hash-map/map-to-values quack-vec m))))
