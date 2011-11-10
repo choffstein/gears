@@ -115,7 +115,9 @@
    => (seqify {:a :b})
    ({:a :b})
    => (seqify nil)
-   ()"
+   ()
+   => (seqify 4)
+   (4)"
   (fn [e] (seq? e)))
 (defmethod seqify true [e] e)
 (defmethod seqify false [e] (if (nil? e) (list) (list e)))
