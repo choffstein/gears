@@ -78,3 +78,15 @@
                 (let [inner-map (get outer-map outer-key)]
                   (into {} (for [[k v] inner-map]
                              [k {outer-key v}])))) (keys outer-map))))
+
+(defn deep-merge
+  "Given maps, create a single large map where shared keys are merged, no destroyed.
+   Only works for a map of maps
+
+  => (deep-merge {:a {:b :c} :d {:e :f}} {:a {5 6} :d {7 8 9 10} :e {\"elf\" \"santa clause\"}})
+     {:a {:b :c 5 6} :d {:e :f 7 8 9 10} :e {\"elf\" \"santa clause\"}}"
+  [& maps]
+  (let [all-keys (set (flatten (pmap keys maps)))]
+    (into {} (for [key all-keys]
+               [key
+                (apply merge (pmap #(get % key) maps))]))))
