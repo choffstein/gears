@@ -1,11 +1,9 @@
 (defproject gears "1.0.0-SNAPSHOT"
   :description "FIXME: write"
-  :dependencies [[org.clojure/clojure "1.2.0"]
-                 [org.clojure/clojure-contrib "1.2.0"]
+  :dependencies [[org.clojure/clojure "1.3.0-beta1"]
                  [mmemail "1.0.1"]
-                 [sandbar/sandbar "0.3.0"]
-                 [clj-time "0.3.0"]]
+                 [sandbar/sandbar "0.4.0-SNAPSHOT"]
+                 [clj-time "0.3.3"]]
   :dev-dependencies [[swank-clojure "1.4.0-SNAPSHOT"]
-		     [lein-marginalia "0.6.0"]
-                     [lein-clj-doc-test "0.0.1"]]
-  :jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n"])
+		     [lein-marginalia "0.6.1"]
+                     [lein-clj-doc-test "0.0.1"]])

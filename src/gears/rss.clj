@@ -1,7 +1,9 @@
 (ns gears.rss
-  (:use clojure.contrib.prxml))
+  ;;(:use clojure.contrib.prxml)
+  )
 
-(defn- articles [data]
+(comment
+  (defn- articles [data]
   (reduce
    (fn [feed v]
      (conj feed
@@ -31,3 +33,4 @@
              [:link link]
              [:description description]
              (articles data)]])))
+)
