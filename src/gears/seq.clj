@@ -12,8 +12,8 @@
   (tests/true-for-any? #(= % x) coll))
 
 (defn rank-index
-  "Given a seq, returns a seq where the values are the positional rank of each member of the
-  seq in descending order
+  "Given a seq, returns a seq where the values are the positional rank 
+   of each member of the seq in descending order
 
    => (rank-index [])
    ()
@@ -28,8 +28,8 @@
     (map #(get rank-map %) coll)))
 
 (defmulti traverse
-  "Traverse a collection of collections, applying a function to the elements of that collection.
-   By default, applies to values, not keys, of a map
+  "Traverse a collection of collections, applying a function to the elements 
+   of that collection. By default, applies to values, not keys, of a map
 
    => (traverse #(+ % 1) [1 2 3 4])
    [2 3 4 5]
@@ -40,14 +40,21 @@
    => (traverse #(+ % 1) #{1 2 3})
    (2 3 4)"
   (fn [f coll] (class coll)))
-(defmethod traverse clojure.lang.PersistentVector [f v] (map (partial traverse f) v))
-(defmethod traverse clojure.lang.PersistentList [f l] (map (partial traverse f) l))
-(defmethod traverse clojure.lang.PersistentArrayMap [f m] (hash-map/map-to-values (partial traverse f) m))
-;; Should this map a set to a list, or back to a set?  What if the function creates two identical values from within the set?  For now, we'll keep it a list, since that is what clojure's map function does
-(defmethod traverse clojure.lang.PersistentHashSet [f s] (map (partial traverse f) s))
-(defmethod traverse :default [f s] (if (sequential? s)
-                                     (map (partial traverse f) s)
-                                     (f s)))
+(defmethod traverse clojure.lang.PersistentVector [f v] 
+  (map (partial traverse f) v))
+(defmethod traverse clojure.lang.PersistentList [f l] 
+  (map (partial traverse f) l))
+(defmethod traverse clojure.lang.PersistentArrayMap [f m] 
+  (hash-map/map-to-values (partial traverse f) m))
+;; Should this map a set to a list, or back to a set?  What if the function 
+;; creates two identical values from within the set?  For now, we'll keep it 
+;; a list, since that is what clojure's map function does
+(defmethod traverse clojure.lang.PersistentHashSet [f s] 
+  (map (partial traverse f) s))
+(defmethod traverse :default [f s] 
+  (if (sequential? s)
+    (map (partial traverse f) s)
+    (f s)))
 
 (defn drop-nth
   "Drop the nth item from coll

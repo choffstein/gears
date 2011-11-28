@@ -15,7 +15,8 @@
   ([] (todays-date-as-str "yyyy-MM-dd'T'HH:mmZ")))
 
 (defn date-to-string
-  "Convert a Java Date object to a yyyy-MM-dd formatted string, unless a format is provided."
+  "Convert a Java Date object to a yyyy-MM-dd formatted string, 
+   unless a format is provided."
   ([date] (date-to-string date "yyyy-MM-dd"))
   ([date format]  (let [custom-formatter (format/formatter format)]
                     (format/unparse custom-formatter date))))
@@ -25,11 +26,13 @@
    automatically attempts to convert with yyyy-MM-dd and MM/dd/yyyy formats."
   [date-string & given-formats]
   (let [formats (or given-formats ["MM/dd/yyyy" "yyyy-MM-dd"])
-        date-objects (filter identity (map #(try (format/parse (format/formatter %)
-                                                               date-string)
-                                                 (catch Exception e nil)) formats))]
+        date-objects (filter identity 
+                             (map #(try (format/parse (format/formatter %)
+                                                      date-string)
+                                        (catch Exception e nil)) formats))]
     (if (empty? date-objects)
-        (throw (java.text.ParseException. (str "Unable to parse string: " date-string) 0))
+        (throw (java.text.ParseException. (str "Unable to parse string: " 
+                                               date-string) 0))
         (first date-objects))))
 
 (defn date-to-long [date]
@@ -41,9 +44,11 @@
 (defn between?
   "Checks whether a date is within a given range of dates
 
-  => (between? (clj-time.core/date-time 1987) (clj-time.core/date-time 1986) (clj-time.core/date-time 1990))
+  => (between? (clj-time.core/date-time 1987) (clj-time.core/date-time 1986) 
+                                              (clj-time.core/date-time 1990))
   true
-  => (between? (clj-time.core/date-time 1994) (clj-time.core/date-time 1986) (clj-time.core/date-time 1990))
+  => (between? (clj-time.core/date-time 1994) (clj-time.core/date-time 1986) 
+                                              (clj-time.core/date-time 1990))
   false"
   [date begin end]
   (time/within? (time/interval begin end)
