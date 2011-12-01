@@ -1,8 +1,6 @@
 (defproject gears "1.0.0-SNAPSHOT"
   :description "FIXME: write"
   :dependencies [[org.clojure/clojure "1.3.0-beta1"]
-                 [mmemail "1.0.1"]
-                 [sandbar/sandbar "0.4.0-SNAPSHOT"]
                  [clj-time "0.3.3"]]
   :dev-dependencies [[swank-clojure "1.4.0-SNAPSHOT"
                       :exclusions [org.clojure/clojure

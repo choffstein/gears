@@ -1,8 +1,5 @@
 (ns gears.http.middleware
-  (:use [gears.http]
-        [mmemail.core]
-        [gears.exceptions]
-        [sandbar.stateful-session]))
+  (:use [gears.http]))
 
 (defn wrap-if
   "Creates a middleware wrapper that applies `wrapper` if `pred` is true"
@@ -37,10 +34,11 @@
 	   :headers {"Content-Type" "text/plain"}
 	   :body "We're sorry, something went wrong.  An administrator has been informed."})))))
 
-(defn wrap-email-on-exception
+(comment
+  (defn wrap-email-on-exception
   "`mailbox-info` follows the configuration of https://github.com/slagyr/mmemail and must contain connection information"
   [mailbox-info exception-handler]
-  (partial wrap-exception  (create-mailer mailbox-info) exception-handler))
+  (partial wrap-exception  (create-mailer mailbox-info) exception-handler)))
 
 (defn wrap-track
   "Requires that sandbar's wrap-stateful-session be utilized to enable session data.
