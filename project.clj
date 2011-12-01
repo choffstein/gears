@@ -5,5 +5,7 @@
                  [sandbar/sandbar "0.4.0-SNAPSHOT"]
                  [clj-time "0.3.3"]]
   :dev-dependencies [[swank-clojure "1.4.0-SNAPSHOT"]
+                     :exclusions [org.clojure/clojure
+                                  org.clojure/clojure-contrib]
 		     [lein-marginalia "0.6.1"]
                      [lein-clj-doc-test "0.0.1"]])
