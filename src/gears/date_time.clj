@@ -6,6 +6,12 @@
 (defn todays-date []
   (time/now))
 
+(defn date-to-string
+  "Convert a Java Date object to a yyyy-MM-dd formatted string,
+   unless a format is provided."
+  ([date] (date-to-string date "yyyy-MM-dd"))
+  ([date format]  (let [custom-formatter (format/formatter format)]
+                    (format/unparse custom-formatter date))))
 (defn todays-date-as-str
   "Today's date as a yyyy-MM-dd string, unless a format is provided."
   ([] (todays-date-as-str "yyyy-MM-dd"))
@@ -14,13 +20,6 @@
 (defn current-time-as-str
   "The current time in yyyy-MM-dd'T'HH:mmZ unless a format is provided."
   ([] (todays-date-as-str "yyyy-MM-dd'T'HH:mmZ")))
-
-(defn date-to-string
-  "Convert a Java Date object to a yyyy-MM-dd formatted string,
-   unless a format is provided."
-  ([date] (date-to-string date "yyyy-MM-dd"))
-  ([date format]  (let [custom-formatter (format/formatter format)]
-                    (format/unparse custom-formatter date))))
 
 (defn string-to-date
   "Convert a formatted string to a Java Date object.  If no format is given,
