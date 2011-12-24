@@ -2,7 +2,7 @@
   (:require [gears.list :as list]))
 
 (defn map-to-keys
-  "Takes a function `f` and maps it to the keys of m and reconstructs the 
+  "Takes a function `f` and maps it to the keys of m and reconstructs the
    hash-map
 
   => (map-to-keys #(+ % 1) {1 5, 2 4})
@@ -11,7 +11,7 @@
   (into {} (for [[k v] m] [(f k) v])))
 
 (defn map-to-values
-  "Takes a function `f` and maps it to the values of m and reconstructs the 
+  "Takes a function `f` and maps it to the values of m and reconstructs the
    hash-map
 
   => (map-to-values #(+ % 1) {1 5, 2 4})
@@ -31,14 +31,14 @@
                               all-key-values)))
 
 (defn merge-map-seqs-by-key-value
-  "Given a list of 'sets' (using that term loosely here, because they 
+  "Given a list of 'sets' (using that term loosely here, because they
    aren't actual clojure sets, merge them by a given key.  For example:
 
-   => (merge-map-seqs-by-key-value :a [{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}] 
+   => (merge-map-seqs-by-key-value :a [{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}]
                                       [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}])
    ({:a 8 :b 9 :c 18} {:a 6 :b 7 :c 14} {:a 5 :b 6 :c 12})"
   [key & sets]
-  (let [all-key-values (set (flatten (map #(pmap (fn [m] (get m key)) %) sets)))]
+  (let [all-key-values (set (flatten (map #(map (fn [m] (get m key)) %) sets)))]
     (reduce
      (fn [acc k] (cons (assoc (apply merge (flatten (map
 						     #(map (fn [m] (dissoc m key))
@@ -49,7 +49,7 @@
      [] all-key-values)))
 
 (defn map-from-headers-and-rows
-  "Take the headers given and construct a map where the keys are the header 
+  "Take the headers given and construct a map where the keys are the header
    values and the values are the corresponding row values.  For example:
 
    => (map-from-headers-and-rows [:a :b :c] [[1 2 3][4 5 6]])
@@ -71,7 +71,7 @@
   {(get map key) (dissoc map key)})
 
 (defn invert-outer-for-inner-keys
-  "Given a map of maps, where the inner maps share keys, invert the inner keys 
+  "Given a map of maps, where the inner maps share keys, invert the inner keys
    for the outter keys and merge the maps]
 
   => (invert-outer-for-inner-keys {:a {:b :c :e :f} :d {:b :g :h :i}})
@@ -84,14 +84,14 @@
                              [k {outer-key v}])))) (keys outer-map))))
 
 (defn deep-merge
-  "Given maps, create a single large map where shared keys are merged, 
+  "Given maps, create a single large map where shared keys are merged,
    not destroyed.  Only works for a map of maps
 
-  => (deep-merge {:a {:b :c} :d {:e :f}} {:a {5 6} :d {7 8 9 10} :e 
+  => (deep-merge {:a {:b :c} :d {:e :f}} {:a {5 6} :d {7 8 9 10} :e
                  {\"elf\" \"santa clause\"}})
      {:a {:b :c 5 6} :d {:e :f 7 8 9 10} :e {\"elf\" \"santa clause\"}}"
   [& maps]
-  (let [all-keys (set (flatten (pmap keys maps)))]
+  (let [all-keys (set (flatten (map keys maps)))]
     (into {} (for [key all-keys]
                [key
-                (apply merge (pmap #(get % key) maps))]))))
+                (apply merge (map #(get % key) maps))]))))
