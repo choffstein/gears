@@ -6,7 +6,7 @@
         coll-groups (partition-all (math/ceil (/ (count coll) n-cores)) coll)]
     (reduce-fn
      (pmap (fn [coll-group]
-             (map-fn coll-group))
+             (map map-fn coll-group))
            coll-groups))))
 
 (defn map-reduce-concat [map-fn coll]
