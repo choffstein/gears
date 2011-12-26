@@ -54,7 +54,6 @@
   => (between? (clj-time.core/date-time 1994) (clj-time.core/date-time 1986)
                                               (clj-time.core/date-time 1990))
   false"
-  ^boolean
   [date begin end]
   (time/within? (time/interval begin end)
             date))
