@@ -45,7 +45,7 @@
 (defn long-to-date [^long long]
   (coerce/from-long long))
 
-(defn between? ^boolean
+(defn between?
   "Checks whether a date is within a given range of dates
 
   => (between? (clj-time.core/date-time 1987) (clj-time.core/date-time 1986)
@@ -54,6 +54,7 @@
   => (between? (clj-time.core/date-time 1994) (clj-time.core/date-time 1986)
                                               (clj-time.core/date-time 1990))
   false"
+  ^boolean
   [date begin end]
   (time/within? (time/interval begin end)
             date))
