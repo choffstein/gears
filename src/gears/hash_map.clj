@@ -32,7 +32,7 @@
                                        (map (fn [m] (get m %)) maps))
                               all-key-values)))
 
-(defn merge-map-seqs-by-key-value
+(comment (defn merge-map-seqs-by-key-value
   "Given a list of 'sets' (using that term loosely here, because they
    aren't actual clojure sets, merge them by a given key.  For example:
 
@@ -48,7 +48,17 @@
 						     sets)))
 			 key k)
 		       acc))
-     [] all-key-values)))
+     [] all-key-values))))
+
+(defmacro merge-map-seqs-by-key-value
+  "Given a list of 'sets' (using that term loosely here, because they
+   aren't actual clojure sets, merge them by a given key.  For example:
+
+   => (merge-map-seqs-by-key-value :a [{:a 5 :b 6} {:a 6 :b 7} {:a 8 :b 9}]
+                                      [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}])
+   #{{:a 8 :b 9 :c 18} {:a 6 :b 7 :c 14} {:a 5 :b 6 :c 12}}"
+  [key & sets]
+  `(clojure.set/join ~@sets {~key ~key}))
 
 (defn map-from-headers-and-rows
   "Take the headers given and construct a map where the keys are the header
