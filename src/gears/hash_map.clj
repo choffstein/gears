@@ -81,7 +81,8 @@
          (map (fn [outer-key]
                 (let [inner-map (get outer-map outer-key)]
                   (into {} (for [[k v] inner-map]
-                             [k {outer-key v}])))) (keys outer-map))))
+                             [k {outer-key v}]))))
+              (keys outer-map))))
 
 (defn deep-merge
   "Given maps, create a single large map where shared keys are merged,
@@ -93,5 +94,6 @@
   [& maps]
   (let [all-keys (set (flatten (map keys maps)))]
     (into {} (for [key all-keys]
-               [key
-                (apply merge (map #(get % key) maps))]))))
+               [key                                  ;; associate the key with the merged map
+                (apply merge                         ;; given a list of maps -- each associated with a given key -- merge
+                       (map #(get % key) maps))])))) ;; for a given key, loop through the maps and get the values
