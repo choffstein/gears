@@ -40,7 +40,8 @@
   [mailbox-info exception-handler]
   (partial wrap-exception  (create-mailer mailbox-info) exception-handler)))
 
-(defn wrap-track
+(comment
+  (defn wrap-track
   "Requires that sandbar's wrap-stateful-session be utilized to enable session data.
    Stores user action history based on the request."
   [handler]
@@ -51,4 +52,4 @@
                           :uri (:uri req)
                           :method (request-method req)}]
         (session-put! :track-history (cons current-action current-history)))
-      (handler req))))
+      (handler req)))))

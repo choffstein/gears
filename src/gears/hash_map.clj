@@ -8,7 +8,12 @@
   => (map-to-keys #(+ % 1) {1 5, 2 4})
   {2 5, 3 4}"
   [f m]
-  (into {} (for [[k v] m] [(f k) v])))
+  (persistent!
+   (reduce (fn [s [k v]]
+             (assoc! s (f k) v))
+           (transient {})
+           m)))
+
 
 (defn map-to-values
   "Takes a function `f` and maps it to the values of m and reconstructs the
@@ -17,7 +22,11 @@
   => (map-to-values #(+ % 1) {1 5, 2 4})
   {1 6, 2 5}"
   [f m]
-  (into {} (for [[k v] m] [k (f v)])))
+  (persistent!
+   (reduce (fn [s [k v]]
+             (assoc! s k (f v)))
+           (transient {})
+           m)))
 
 (defn merge-maps-by-key
   "Given two maps, merge shared keys into a list.
@@ -80,8 +89,7 @@
   (apply (partial merge-with merge)
          (map (fn [outer-key]
                 (let [inner-map (get outer-map outer-key)]
-                  (into {} (for [[k v] inner-map]
-                             [k {outer-key v}]))))
+                  (map-to-values #(identity {outer-key %}) inner-map)))
               (keys outer-map))))
 
 (defn deep-merge
@@ -93,7 +101,10 @@
      {:a {:b :c 5 6} :d {:e :f 7 8 9 10} :e {\"elf\" \"santa clause\"}}"
   [& maps]
   (let [all-keys (set (flatten (map keys maps)))]
-    (into {} (for [key all-keys]
-               [key                                  ;; associate the key with the merged map
-                (apply merge                         ;; given a list of maps -- each associated with a given key -- merge
-                       (map #(get % key) maps))])))) ;; for a given key, loop through the maps and get the values
+    (persistent!
+     (reduce (fn [m key]
+               (assoc! m key
+                       (apply merge
+                              (map (fn [map] (get map key)) maps))))
+             (transient {})
+             all-keys)))) ;; for a given key, loop through the maps and get the values
