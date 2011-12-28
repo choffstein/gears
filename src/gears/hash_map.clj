@@ -9,7 +9,7 @@
   {2 5, 3 4}"
   [f m]
   (into {} (for [[k v] m]
-             [(f k) v]))
+             [(f k) v])))
 
 (defn map-to-values
   "Takes a function `f` and maps it to the values of m and reconstructs the
@@ -94,10 +94,7 @@
      {:a {:b :c 5 6} :d {:e :f 7 8 9 10} :e {\"elf\" \"santa clause\"}}"
   [& maps]
   (let [all-keys (set (flatten (map keys maps)))]
-    (persistent!
-     (reduce (fn [m key]
-               (assoc! m key
-                       (apply merge
-                              (map (fn [map] (get map key)) maps))))
-             (transient {})
-             all-keys)))) ;; for a given key, loop through the maps and get the values
+    (into {} (for [key all-keys]
+               [key
+                (apply merge
+                       (map (fn [map] (get map key)) maps))]))))
