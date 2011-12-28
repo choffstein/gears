@@ -8,12 +8,8 @@
   => (map-to-keys #(+ % 1) {1 5, 2 4})
   {2 5, 3 4}"
   [f m]
-  (persistent!
-   (reduce (fn [s [k v]]
-             (assoc! s (f k) v))
-           (transient {})
-           m)))
-
+  (into {} (for [[k v] m]
+             [(f k) v]))
 
 (defn map-to-values
   "Takes a function `f` and maps it to the values of m and reconstructs the
@@ -22,11 +18,8 @@
   => (map-to-values #(+ % 1) {1 5, 2 4})
   {1 6, 2 5}"
   [f m]
-  (persistent!
-   (reduce (fn [s [k v]]
-             (assoc! s k (f v)))
-           (transient {})
-           m)))
+  (into {} (for [[k v] m]
+             [k (f v)])))
 
 (defn merge-maps-by-key
   "Given two maps, merge shared keys into a list.
