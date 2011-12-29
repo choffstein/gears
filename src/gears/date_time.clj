@@ -3,15 +3,15 @@
             [clj-time.format :as format]
             [clj-time.coerce :as coerce]))
 
-(defn todays-date []
+(defn todays-date ^org.joda.time.DateTime []
   (time/now))
 
 (defn date-to-string
   "Convert a Java Date object to a yyyy-MM-dd formatted string,
    unless a format is provided."
   ^String
-  ([date] (date-to-string date "yyyy-MM-dd"))
-  ([date ^String format]  (let [custom-formatter (format/formatter format)]
+  ([^org.joda.time.DateTime date] (date-to-string date "yyyy-MM-dd"))
+  ([^org.joda.time.DateTime date ^String format]  (let [custom-formatter (format/formatter format)]
                             (format/unparse custom-formatter date))))
 
 (defn todays-date-as-str
@@ -39,7 +39,7 @@
                                                date-string) 0))
         (first date-objects))))
 
-(defn date-to-long ^Long [date]
+(defn date-to-long ^Long [^org.joda.time.DateTime date]
   (coerce/to-long date))
 
 (defn long-to-date [^Long long]
@@ -54,6 +54,6 @@
   => (between? (clj-time.core/date-time 1994) (clj-time.core/date-time 1986)
                                               (clj-time.core/date-time 1990))
   false"
-  [date begin end]
+  [^org.joda.time.DateTime date ^org.joda.time.DateTime begin ^org.joda.time.DateTime end]
   (time/within? (time/interval begin end)
             date))
