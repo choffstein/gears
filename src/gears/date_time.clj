@@ -39,10 +39,10 @@
                                                date-string) 0))
         (first date-objects))))
 
-(defn date-to-long ^long [date]
+(defn date-to-long ^Long [date]
   (coerce/to-long date))
 
-(defn long-to-date [^long long]
+(defn long-to-date [^Long long]
   (coerce/from-long long))
 
 (defn between?
