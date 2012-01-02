@@ -8,7 +8,7 @@
   ([failure-fn x & more]
      `(let [x# ~x]
         (if (~failure-fn x#)
-          (while-failing ~@more)
+          (while-failure ~failure-fn ~@more)
           x#))))
 
 (defmacro until-success
@@ -22,4 +22,4 @@
      `(let [x# ~x]
         (if (~success-fn x#)
           x#
-          (until-success ~@more)))))
+          (until-success ~success-fn ~@more)))))
