@@ -71,7 +71,8 @@
   => (invert-outer-for-inner-keys {:a {:b :c :e :f} :d {:b :g :h :i}})
   {:b {:a :c :d :g} :e {:a :f} :h {:d :i}}"
   [outer-map]
-  (apply (partial merge-with merge)
+  (apply (partial merge-with merge) ;; merge-with conj's maps and resolves key-replication
+                                    ;; with the supplied function
          (map (fn [outer-key]
                 (let [inner-map (get outer-map outer-key)]
                   (map-to-values #(identity {outer-key %}) inner-map)))

@@ -11,8 +11,9 @@
    unless a format is provided."
   ^String
   ([^org.joda.time.DateTime date] (date-to-string date "yyyy-MM-dd"))
-  ([^org.joda.time.DateTime date ^String format]  (let [custom-formatter (format/formatter format)]
-                            (format/unparse custom-formatter date))))
+  ([^org.joda.time.DateTime date ^String format]
+     (let [custom-formatter (format/formatter format)]
+       (format/unparse custom-formatter date))))
 
 (defn todays-date-as-str
   "Today's date as a yyyy-MM-dd string, unless a format is provided."
