@@ -4,10 +4,7 @@
                  [clj-time "0.3.3"]
                  [org.clojure/algo.generic "0.1.0"]]
 
-  :dev-dependencies [[swank-clojure "1.4.0-SNAPSHOT"
-                      :exclusions [org.clojure/clojure
-                                  org.clojure/clojure-contrib]]
-		     [lein-marginalia "0.6.1"]
+  :dev-dependencies [[lein-marginalia "0.7.0-SNAPSHOT"]
                      [lein-clj-doc-test "0.0.1-SNAPSHOT"]]
 
   :repositories {"nfr-releases" "s3p://newfound-mvn-repo/releases/"
