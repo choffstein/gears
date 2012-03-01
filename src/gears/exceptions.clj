@@ -1,5 +1,5 @@
 (ns gears.exceptions
-  (:use [clojure.contrib.str-utils]))
+  (:require [clojure.string :as string]))
 
 (defn stack-trace-as-vec
   "Take an exception and create a vector of strings from it"
@@ -9,4 +9,4 @@
 (defn stack-trace-as-string
   "Take an exception and create a stack-trace string from it"
   [e]
-  (str-join "\n" (stack-trace-as-vec e)))
+  (string/join "\n" (stack-trace-as-vec e)))
