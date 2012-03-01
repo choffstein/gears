@@ -7,5 +7,8 @@
   :dev-dependencies [[lein-marginalia "0.7.0-SNAPSHOT"]
                      [lein-clj-doc-test "0.0.1-SNAPSHOT"]]
 
+  :plugins [[s3-wagon-private "1.1.1"]]
+
   :repositories {"nfr-releases" "s3p://newfound-mvn-repo/releases/"
-                 "nfr-snapshots" "s3p://newfound-mvn-repo/snapshots/"})
+                 "nfr-snapshots" "s3p://newfound-mvn-repo/snapshots/"
+                 "central-proxy" "http://repository.sonatype.org/content/repositories/central/"})
