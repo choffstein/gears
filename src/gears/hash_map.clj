@@ -1,5 +1,6 @@
 (ns gears.hash-map
-  (:require [gears.list :as list]))
+  (:require [clojure.set :as set]
+            [gears.list :as list]))
 
 (defn map-to-keys
   "Takes a function `f` and maps it to the keys of m and reconstructs the
@@ -40,7 +41,7 @@
                                       [{:a 5 :c 12} {:a 6 :c 14} {:a 8 :c 18}])
    #{{:a 8 :b 9 :c 18} {:a 6 :b 7 :c 14} {:a 5 :b 6 :c 12}}"
   [key & sets]
-  `(clojure.set/join ~@sets {~key ~key}))
+  `(set/join ~@sets {~key ~key}))
 
 (defn map-from-headers-and-rows
   "Take the headers given and construct a map where the keys are the header
