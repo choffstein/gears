@@ -9,6 +9,7 @@
 
   => (quack-vec {1 :a 2 :b 5 :c})
   [nil :a :b nil nil :c]
+
   => (quack-vec {0 {2 :a 4 :b} 2 5})
   [[nil nil :a nil :b] nil 5]"
   (fn [coll] (class coll)))
