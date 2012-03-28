@@ -10,7 +10,7 @@
            coll-groups))))
 
 (defn map-reduce-concat [map-fn coll]
-  (map-reduce (partial apply concat) map-fn coll))
+  (map-reduce map-fn (partial apply concat) coll))
 
 (defn map-reduce-merge [map-fn coll]
-  (map-reduce (partial apply merge) map-fn coll))
+  (map-reduce map-fn (partial apply merge) coll))
